@@ -22,7 +22,7 @@ export const addMovieRepo = async (data:movie) => {
 
 export const updateMovieRepo = async (data:movie, id:string) =>{
     try {
-        await MovieModel.findOneAndUpdate({id}, {...data}, {upsert: true, new: true});
+        await MovieModel.findByIdAndUpdate(id, {...data}, {upsert: true, new: true});
     } catch (error) {
         throw error;
     }    

@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
 
+const uri = `mongodb+srv://root:athithian@athithian.vhxrl6a.mongodb.net/?retryWrites=true&w=majority&appName=Athithian`;
 
-const url = "mongodb://localhost:27017/Bucket_List";
+
 
 const connectToMongoDB = async () => {
     try {
-        await mongoose.connect(url);
+        await mongoose.connect(uri);
         console.log("Connected to MongoDB");
     } catch (error) {
+        console.error(error);
         console.error("Error Occured While connecting to MongoDB");
-        
     }
 }
 

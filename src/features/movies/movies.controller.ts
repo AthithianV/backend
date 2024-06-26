@@ -25,6 +25,7 @@ export const updateMovie = async (req:Request, res:Response, next:NextFunction) 
     try {
         const movie = req.body;
         const movieId:string = req.params.movieId;
+        
         await updateMovieRepo(movie, movieId);
         res.status(201).json({success: true, msg:"Movie is updated"});
     } catch (error) {
