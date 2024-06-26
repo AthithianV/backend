@@ -20,9 +20,9 @@ export const addMovieRepo = async (data:movie) => {
     }
 }
 
-export const updateMovieRepo = async (data:movie) =>{
+export const updateMovieRepo = async (data:movie, id:string) =>{
     try {
-        await MovieModel.findOneAndUpdate({_id: data._id}, {...data}, {upsert: true, new: true});
+        await MovieModel.findOneAndUpdate({id}, {...data}, {upsert: true, new: true});
     } catch (error) {
         throw error;
     }    
@@ -38,7 +38,7 @@ export const deleteMovieRepo = async (id:string)=>{
 
 export const rateMovieRepo = async (id:string, rating:number)=>{
     try {
-        await MovieModel.findByIdAndUpdate(id, {rating}, {new: true});
+        await MovieModel.findByIdAndUpdate(id, {rating});
     } catch (error) {
         throw error;
     }    
@@ -46,7 +46,8 @@ export const rateMovieRepo = async (id:string, rating:number)=>{
 
 export const toggleWatchRepo = async (id:string, seen:boolean) =>{
     try {
-        await MovieModel.findByIdAndUpdate(id, {seen}, {new: true});
+        const updated = await MovieModel.findByIdAndUpdate(id, {seen});
+        console.log(updated);
     } catch (error) {
         throw error;
     }

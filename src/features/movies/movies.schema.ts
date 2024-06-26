@@ -7,8 +7,8 @@ const MovieSchema = new mongoose.Schema({
     release_date: String,
     poster: String,
     backdrop: String,
-    rating: Number,
-    seen: Boolean,
+    rating: {type: Number, default: 0, max: 5, min: 0},
+    seen: {type: Boolean, default: false},
 });
 
 const MovieModel = mongoose.model("movies", MovieSchema);

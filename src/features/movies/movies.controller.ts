@@ -24,7 +24,8 @@ export const addMovie = async (req:Request, res:Response, next:NextFunction) => 
 export const updateMovie = async (req:Request, res:Response, next:NextFunction) =>{
     try {
         const movie = req.body;
-        await updateMovieRepo(movie);
+        const movieId:string = req.params.movieId;
+        await updateMovieRepo(movie, movieId);
         res.status(201).json({success: true, msg:"Movie is updated"});
     } catch (error) {
         next(error);
@@ -43,20 +44,20 @@ export const deleteMovie = async (req:Request, res:Response, next:NextFunction)=
 
 export const rateMovie = async (req:Request, res:Response, next:NextFunction)=>{
     try {
-        const movieId:string = req.query.movieId?.toString() || "";
-        const rating = Number(req.query.rating || 0);
+        const movieId:string = req.params.movieId?.toString() || "";
+        const rating = Number(req.params.rating || 0);
         await rateMovieRepo(movieId, rating);
         res.status(201).json({success: true, msg:"Rating for Movie is added"});
     } catch (error) {
         next(error);
-    }    
+    } 
 }
 
 export const toggleWatch = async (req:Request, res:Response, next:NextFunction) =>{
     try {
-        const movieId:string = req.params.id;
-        let seen:boolean = false;
-        if(req.params.seen === '1') seen = true;
+        const movieId:string = req.params.movieId;
+        let seen:boolean = true;
+        if(req.params.seen === '0') seen = false;
         await toggleWatchRepo(movieId, seen);
         res.status(201).json({success: true, msg: seen?"Movie marked as watched":"Movie marked unwatch"});
     } catch (error) {
