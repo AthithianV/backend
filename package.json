@@ -4,7 +4,8 @@
   "description": "A backend Application for movies watchlist application",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node server/index.ts"
+    "start": "ts-node server/index.ts",
+    "build": "netlify deploy --prod"
   },
   "author": "Athithian V",
   "license": "ISC",
@@ -15,6 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.4",
+    "netlify-lambda": "^2.0.16",
+    "serverless-http": "^3.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2"
   },

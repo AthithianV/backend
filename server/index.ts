@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
+import serverless from "serverless-http";
 
 import connectToMongoDB from "../src/config/connectToDb";
 import MovieRouter from "../src/features/movies/movies.routes";
@@ -11,7 +12,9 @@ const server = express();
 server.use(express.json());
 server.use(cors());
 
-server.use("/movies", MovieRouter);
+const router = express.Router();
+
+router.use("/movies", MovieRouter);
 
 server.use((req, res, next) => {
   res.status(400).send("Page not Found");
@@ -26,3 +29,6 @@ server.listen(port, () => {
     console.log("Server Listening at "+port);
     connectToMongoDB();
 });
+
+server.use("/.netlify/functions/api", router);
+module.exports.handler = serverless(server);
