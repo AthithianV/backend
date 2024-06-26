@@ -1,39 +1,28 @@
-import axios from "axios";
-import { error } from "console";
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
+import cors from "cors";
+
+import connectToMongoDB from "../src/config/connectToDb";
+import MovieRouter from "../src/features/movies/movies.routes";
+import { ErrorHandler } from "../src/middlewares/errorHandler";
+
 
 const server = express();
 
-const TMDB_API_KEY = 'd60f042c4697494d7e99bd7e09fb4a28';
-const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
-const TMDB_BACKDROP_BASE_URL = 'https://image.tmdb.org/t/p/w780';
+server.use(express.json());
+server.use(cors());
 
-server.get("/get", async (req:Request, res:Response)=>{
-    try{
+server.use("/movies", MovieRouter);
 
-        const response = await axios.get(`${TMDB_BASE_URL}/movie/now_playing`, {
-      params: {
-        api_key: TMDB_API_KEY,
-        language: 'en-US',
-        page: 1
-      }
-    });
+server.use((req, res, next) => {
+  res.status(400).send("Page not Found");
+});
 
-    const movies = response.data.results.map((movie: any) => ({
-      ...movie,
-      poster_url: `${TMDB_IMAGE_BASE_URL}${movie.poster_path}`,
-      backdrop_url: `${TMDB_BACKDROP_BASE_URL}${movie.backdrop_path}`
-    }));
-    
-    res.json(movies);
-    }catch(err){
-        error(err);
-    }
-})
+// Error Handling
+server.use(ErrorHandler);
 
 
-const port = 3000;
+const port = process.env.PORT || 10000;
 server.listen(port, () => {
     console.log("Server Listening at "+port);
-})
+    connectToMongoDB();
+});
