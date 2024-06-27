@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "A backend Application for movies watchlist application",
-  "main": "index.ts",
+  "main": "index.ts",  
   "scripts": {
-    "start": "ts-node server/index.ts",
-    "build": "netlify deploy --prod"
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js"
   },
   "author": "Athithian V",
   "license": "ISC",
