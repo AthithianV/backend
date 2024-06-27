@@ -23,10 +23,12 @@ router.use((req, res, next) => {
 router.use(ErrorHandler);
 
 
+server.use("/.netlify/functions/api", router);
+
 const port = process.env.PORT || 10000;
 server.listen(port, () => {
     console.log("Server Listening at "+port);
     connectToMongoDB();
 });
 
-server.use("/.netlify/functions/api", router);
+export {server};
