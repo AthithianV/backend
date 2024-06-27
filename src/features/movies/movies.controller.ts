@@ -35,7 +35,7 @@ export const updateMovie = async (req:Request, res:Response, next:NextFunction) 
 
 export const deleteMovie = async (req:Request, res:Response, next:NextFunction)=>{
     try {
-       const movieId = req.params.id;
+       const movieId = req.params.movieId;
        await deleteMovieRepo(movieId);
        res.status(204).json({success: true, msg:"New Movie is added"});
     } catch (error) {

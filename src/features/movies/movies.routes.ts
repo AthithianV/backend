@@ -6,7 +6,7 @@ const MovieRouter = express.Router();
 MovieRouter.get("/", getAllMovies);
 MovieRouter.post("/", addMovie);
 MovieRouter.put("/:movieId", updateMovie);
-MovieRouter.delete("/", deleteMovie);
+MovieRouter.delete("/:movieId", deleteMovie);
 MovieRouter.get("/rate/:movieId/:rating", rateMovie);
 MovieRouter.get("/toggleWatch/:movieId/:seen", toggleWatch);
 
